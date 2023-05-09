@@ -14,5 +14,5 @@ window.geometry('1000x600')
 
 #teste
 
-
+#dd
 window.mainloop()
