@@ -5,7 +5,7 @@ from PIL import ImageTk, Image
 import random
 import tkinter.messagebox
 
-#TESTE
+#TEs
 
 #window configuration
 window = Tk()
