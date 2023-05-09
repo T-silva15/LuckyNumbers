@@ -5,16 +5,12 @@ from PIL import ImageTk, Image
 import random
 import tkinter.messagebox
 
-#TEs
-
 #window configuration
 window = Tk()
 window.title("Lucky Numbers") 
 window.iconbitmap('LuckyNumbers\imageFiles\icon.ico')
 window.configure(bg='#8beae9')
 window.geometry('1000x600')
-
-#teste 1
 
 
 window.mainloop()
