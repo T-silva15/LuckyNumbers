@@ -12,7 +12,6 @@ window.iconbitmap('LuckyNumbers\imageFiles\icon.ico')
 window.configure(bg='#8beae9')
 window.geometry('1000x600')
 
-#teste
-
+#teste 1
 
 window.mainloop()
