@@ -5,6 +5,8 @@ from PIL import ImageTk, Image
 import random
 import tkinter.messagebox
 
+#TESTE
+
 #window configuration
 window = Tk()
 window.title("Lucky Numbers") 
