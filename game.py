@@ -1,5 +1,6 @@
 import os
 import random
+import time
 
 # function to show the board of a given player
 def showBoard(board):
@@ -52,7 +53,11 @@ def runGame():
     bp2 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]  
     stack = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,18,19,19,20,20]
     table = []  
+    os.system('cls')
+    print("Quem começará o jogo?")
+    time.sleep(1)
     dec = coinflip()
+    input("Pressione uma tecla para continuar...")
     # player starts
     if dec == 0:
         # Loop that ends when any of the boards is full
