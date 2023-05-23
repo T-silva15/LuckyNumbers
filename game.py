@@ -2,7 +2,7 @@ import os
 import random
 import time
 from player import *
-from player import Player
+
 
 # function to show the board of a given player
 def showBoard(board):
@@ -25,16 +25,19 @@ def showBoard(board):
 
 # function to decide which player starts
 def coinflip():
+
+    player_name = 
+    
     print("Quem começará o jogo?")
     time.sleep(1)
     # create random number between 0 and 1
     coin = random.randint(0,1)
     # if the number is 0 player starts (return 0), if not the first one to play is the bot (return 1)
     if coin == 0:
-        print("O jogador", Player, "é o primeiro a jogar!\n")
+        print("O jogador", player_name, "é o primeiro a jogar!\n")
         return 0
     else:
-        print("O bot é o primeiro a jogar!\n")
+        print("O BOT é o primeiro a jogar!\n")
         return 1
         
 # function that gives the player a random clover from the stack
@@ -56,7 +59,7 @@ def runGame():
     stack = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,18,19,19,20,20]
     table = []  
 
-    #--------------------playername()
+
 # decide who starts
     os.system('cls')
     dec = coinflip()
@@ -67,7 +70,7 @@ def runGame():
         while True:
             # Displaying both boards
             os.system('cls') 
-            print("Tabuleiro do Jogador: \n")
+            print("Tabuleiro do Jogador", player_name, " : \n")
             showBoard(bp1)
             input("Pressione uma tecla para continuar...")
             os.system('cls')
@@ -77,10 +80,10 @@ def runGame():
             
             # Check if all entries are different from zero
             if all(value != 0 for value in bp1):
-                print("O Jogador é o Vencedor!")
+                print("O Jogador", player_name, " é o Vencedor!")
                 break
             elif all(value != 0 for value in bp2):
-                print("O Bot é o Vencedor!")
+                print("O BOT é o Vencedor!")
                 break
             # Incrementing a list temporarily to avoid infinite loops
             bp2 = [value + 1 for value in bp2]  
@@ -94,7 +97,7 @@ def runGame():
             showBoard(bp2)
             input("Pressione uma tecla para continuar...")
             os.system('cls')
-            print("Tabuleiro do Jogador: \n")
+            print("Tabuleiro do Jogador", player_name, " : \n")
             showBoard(bp1)
             input("Pressione uma tecla para continuar...")
             

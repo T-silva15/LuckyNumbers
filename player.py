@@ -1,5 +1,4 @@
 import os
-from main import *
 
 # colored text
 from colorama import Back, Fore, Style
@@ -15,7 +14,7 @@ def playername():
     # ask player name
     os.system('cls')
     player_name = input("Digite o nome do jogador: ")
-    player = Player(player_name)
+    # player = Player(player_name)
 
 # option game
 def newGame():
@@ -30,17 +29,3 @@ def newGame():
     print("| / / / / / / / / / / / / / / / / / / / / / / / / / / / / |")
     print("\nIntroduza uma opção: ")
     gm = int(input())
-
-    # choices directions
-    if gm == 1:
-        #runGame()
-        #showMenu()
-    #-----------elif gm == 2:
-        #funcao
-   #---------- elif gm == 3:
-        showMenu()
-
-
-
-
-newGame()
