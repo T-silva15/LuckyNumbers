@@ -2,6 +2,7 @@ import os
 import random
 import time
 from player import *
+from player import Player
 
 # function to show the board of a given player
 def showBoard(board):
@@ -30,7 +31,7 @@ def coinflip():
     coin = random.randint(0,1)
     # if the number is 0 player starts (return 0), if not the first one to play is the bot (return 1)
     if coin == 0:
-        print("O jogador", playername, "é o primeiro a jogar!\n")
+        print("O jogador", Player, "é o primeiro a jogar!\n")
         return 0
     else:
         print("O bot é o primeiro a jogar!\n")
@@ -55,7 +56,7 @@ def runGame():
     stack = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,18,19,19,20,20]
     table = []  
 
-    playername()
+    #--------------------playername()
 # decide who starts
     os.system('cls')
     dec = coinflip()
