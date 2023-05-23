@@ -2,7 +2,6 @@ import os
 import random
 import time
 from player import *
-from player import Player
 
 # function to show the board of a given player
 def showBoard(board):
@@ -49,9 +48,17 @@ def giveClover(stack):
             break
     # tells the user the clover that was drawn
     print("O trevo que saiu foi ", stack[indClover])
+
+# asks player name
+def playername():
+    # ask player name
+    os.system('cls')
+    player_name = input("Digite o nome do jogador: ")
+    player = Player(player_name)
+    board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     
 # functions that runs main game
-def runGame():
+def runGame(player1, player2):
     # Board creation 
     stack = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,18,19,19,20,20]
     table = []  
@@ -67,23 +74,23 @@ def runGame():
         while True:
             # Displaying both boards
             os.system('cls') 
-            print("Tabuleiro do Jogador: \n")
-            showBoard(bp1)
+            print("Tabuleiro do ", player1.name, ": \n")
+            showBoard(player1.board)
             input("Pressione uma tecla para continuar...")
             os.system('cls')
             print("Tabuleiro do Bot: \n")
-            showBoard(bp2)
+            showBoard(player2.board)
             input("Pressione uma tecla para continuar...")
             
             # Check if all entries are different from zero
-            if all(value != 0 for value in bp1):
+            if all(value != 0 for value in player1.board):
                 print("O Jogador é o Vencedor!")
                 break
-            elif all(value != 0 for value in bp2):
+            elif all(value != 0 for value in player2.board):
                 print("O Bot é o Vencedor!")
                 break
             # Incrementing a list temporarily to avoid infinite loops
-            bp2 = [value + 1 for value in bp2]  
+            player2.board = [value + 1 for value in player2.board]  
     # bot starts        
     else:
         # Loop that ends when any of the boards is full
@@ -91,15 +98,15 @@ def runGame():
             # Displaying both boards
             os.system('cls') 
             print("Tabuleiro do Bot: \n")
-            showBoard(bp2)
+            showBoard(player2.board)
             input("Pressione uma tecla para continuar...")
             os.system('cls')
             print("Tabuleiro do Jogador: \n")
-            showBoard(bp1)
+            showBoard(player1.board)
             input("Pressione uma tecla para continuar...")
             
             # Check if all entries are different from zero
-            if all(value != 0 for value in bp1) or all(value != 0 for value in bp2):
+            if all(value != 0 for value in player1.board) or all(value != 0 for value in player2.board):
                 break
             # Incrementing a list temporarily to avoid infinite loops
-            bp2 = [value + 1 for value in bp2]  
+            player2.board = [value + 1 for value in player2.board]  

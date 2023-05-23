@@ -1,8 +1,8 @@
 import os
 from desc import showDescription
-from game import *
 import time
 import colorama
+from game import *
 
 # colored text
 from colorama import Back, Fore, Style
