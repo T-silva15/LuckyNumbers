@@ -4,6 +4,7 @@ import os
 class Player:
     def __init__(self, name):
         self.name = name
+        board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 # asks player name
 def playername():
