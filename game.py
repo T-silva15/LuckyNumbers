@@ -37,18 +37,60 @@ def coinflip(player1):
         return 1
         
 # function that gives the player a random clover from the stack
-def giveClover(stack):
-    # loops until an accetpable clover is drawn (clover )
-    while True:
-        pastIndex = []
-        indClover = random.randint(0,39)
-        # if clover hasn't been drawn before adds it to the list of drawn clovers and breaks out of the loop
-        if indClover not in pastIndex:
-            pastIndex.append(indClover)
-            break
-    # tells the user the clover that was drawn
-    print("O trevo que saiu foi ", stack[indClover])
-
+def gameTurn(board, stack, table):
+    dec = 0
+    # Asks user for option (loops until acceptable answer)
+    while dec < 1 or dec > 2:
+        os.system('cls')
+        print("1. Tirar um trevo do saco")
+        print("2. Escolher um trevo da mesa")
+        dec = int(input("Escolha a sua opção: "))
+    # Draw a clover from stack and place it
+    if dec == 1:
+        # loops until an accetpable clover is drawn
+        while True:
+            pastIndex = []
+            indClover = random.randint(0,39)
+            # if clover hasn't been drawn before adds it to the list of drawn clovers and breaks out of the loop
+            if indClover not in pastIndex:
+                pastIndex.append(indClover)
+                break
+        dec = 0
+        while dec < 1 or dec > 2:
+            os.system('cls')
+            # tells the user the clover that was drawn
+            print("O trevo retirado foi um", stack[indClover],"!\n")
+            print("1. Colocar o trevo no tabuleiro")
+            print("2. Colocar o trevo na mesa ")
+            dec = int(input("Escolha a sua opção: "))
+            
+        if dec == 1:
+            os.system('cls')
+            showBoard(board)
+            input("Pressione uma tecla para continuar...")
+            os.system('cls')
+            print("+-----------------+")
+            print("|  1   2   3   4  |")    
+            print("|-----------------|")
+            print("|  5   6   7   8  |")    
+            print("|-----------------|")
+            print("|  9  10  11   12 |")    
+            print("|-----------------|")
+            print("|  13  14  15  16 |")    
+            print("|-----------------|")
+            pos = int(input("Indique a posição no tabuleiro que pretende colocar o trevo(1-16): "))
+            board[pos-1] = stack[indClover]
+        else:
+            os.system('cls')
+            print("Trevo adicionado à stack!")
+            table.append(stack[indClover])
+    # draw clover from table and place it
+    else:
+        os.system('cls')
+        print("A mesa possui os seguintes trevos: ", stack)
+        print("Qual dos trevos pretende colocar na mesa")
+    
+    
 # functions that runs main game
 def runGame(player1, player2, board1, board2):    
     # Board creation 
@@ -65,7 +107,7 @@ def runGame(player1, player2, board1, board2):
         while True:
             # Displaying both boards
             os.system('cls') 
-            print("Tabuleiro do ", player1, ": \n")
+            print("Tabuleiro do", player1, ": \n")
             showBoard(board1)
             input("Pressione uma tecla para continuar...")
             os.system('cls')
@@ -92,7 +134,7 @@ def runGame(player1, player2, board1, board2):
             showBoard(board2)
             input("Pressione uma tecla para continuar...")
             os.system('cls')
-            print("Tabuleiro do Jogador: \n")
+            print("Tabuleiro do", player1, ": \n")
             showBoard(board1)
             input("Pressione uma tecla para continuar...")
             
