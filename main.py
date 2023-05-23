@@ -21,7 +21,7 @@ def showpage():
 player1 = ""
 board1 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 # create bot 
-player2 = "Bot"
+player2 = "BOT"
 board2 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 # window configuration

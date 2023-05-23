@@ -117,10 +117,10 @@ def runGame(player1, player2, board1, board2):
             
             # Check if all entries are different from zero
             if all(value != 0 for value in board1):
-                print("O Jogador é o Vencedor!")
+                print("O Jogador", player1, "é o Vencedor!")
                 break
             elif all(value != 0 for value in board2):
-                print("O Bot é o Vencedor!")
+                print("O BOT é o Vencedor!")
                 break
             # Incrementing a list temporarily to avoid infinite loops
             board2 = [value + 1 for value in board2]  
@@ -130,7 +130,7 @@ def runGame(player1, player2, board1, board2):
         while True:
             # Displaying both boards
             os.system('cls') 
-            print("Tabuleiro do Bot: \n")
+            print("Tabuleiro do BOT: \n")
             showBoard(board2)
             input("Pressione uma tecla para continuar...")
             os.system('cls')
