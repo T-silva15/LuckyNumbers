@@ -1,8 +1,6 @@
 import os
 import random
 import time
-from player import *
-
 
 # function to show the board of a given player
 def showBoard(board):
@@ -24,7 +22,7 @@ def showBoard(board):
     print("+" + "-" * 13 + "+")  # Print the bottom border
 
 # function to decide which player starts
-def coinflip():
+def coinflip(player1):
     
     print("Quem começará o jogo?")
     time.sleep(1)
@@ -32,7 +30,7 @@ def coinflip():
     coin = random.randint(0,1)
     # if the number is 0 player starts (return 0), if not the first one to play is the bot (return 1)
     if coin == 0:
-        print("O jogador", player_name, "é o primeiro a jogar!\n")
+        print("O jogador", player1, "é o primeiro a jogar!\n")
         return 0
     else:
         print("O BOT é o primeiro a jogar!\n")
@@ -51,24 +49,15 @@ def giveClover(stack):
     # tells the user the clover that was drawn
     print("O trevo que saiu foi ", stack[indClover])
 
-# asks player name
-def playername():
-    # ask player name
-    os.system('cls')
-    player_name = input("Digite o nome do jogador: ")
-    player = Player(player_name)
-    board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-    
 # functions that runs main game
-def runGame(player1, player2):
+def runGame(player1, player2, board1, board2):    
     # Board creation 
     stack = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,18,19,19,20,20]
     table = []  
 
-
 # decide who starts
     os.system('cls')
-    dec = coinflip()
+    dec = coinflip(player1)
     input("Pressione uma tecla para continuar...")
     # player starts
     if dec == 0:
@@ -76,23 +65,23 @@ def runGame(player1, player2):
         while True:
             # Displaying both boards
             os.system('cls') 
-            print("Tabuleiro do ", player1.name, ": \n")
-            showBoard(player1.board)
+            print("Tabuleiro do ", player1, ": \n")
+            showBoard(board1)
             input("Pressione uma tecla para continuar...")
             os.system('cls')
             print("Tabuleiro do Bot: \n")
-            showBoard(player2.board)
+            showBoard(board2)
             input("Pressione uma tecla para continuar...")
             
             # Check if all entries are different from zero
-            if all(value != 0 for value in player1.board):
+            if all(value != 0 for value in board1):
                 print("O Jogador é o Vencedor!")
                 break
-            elif all(value != 0 for value in player2.board):
+            elif all(value != 0 for value in board2):
                 print("O Bot é o Vencedor!")
                 break
             # Incrementing a list temporarily to avoid infinite loops
-            player2.board = [value + 1 for value in player2.board]  
+            board2 = [value + 1 for value in board2]  
     # bot starts        
     else:
         # Loop that ends when any of the boards is full
@@ -100,15 +89,15 @@ def runGame(player1, player2):
             # Displaying both boards
             os.system('cls') 
             print("Tabuleiro do Bot: \n")
-            showBoard(player2.board)
+            showBoard(board2)
             input("Pressione uma tecla para continuar...")
             os.system('cls')
             print("Tabuleiro do Jogador: \n")
-            showBoard(player1.board)
+            showBoard(board1)
             input("Pressione uma tecla para continuar...")
             
             # Check if all entries are different from zero
-            if all(value != 0 for value in player1.board) or all(value != 0 for value in player2.board):
+            if all(value != 0 for value in board1) or all(value != 0 for value in board2):
                 break
             # Incrementing a list temporarily to avoid infinite loops
-            player2.board = [value + 1 for value in player2.board]  
+            board2 = [value + 1 for value in board2]  

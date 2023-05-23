@@ -17,6 +17,13 @@ def showpage():
     print(f"\n-------------------------------------{Back.WHITE}{Fore.BLACK}Jogo de: Filipe Nunes e Tiago Isidro{Back.RESET}{Fore.RESET}-------------------------------------")
     input("\nPressione uma tecla para avançar...")
 
+# Player initialization
+player1 = ""
+board1 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+# create bot 
+player2 = "Bot"
+board2 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
 # window configuration
 def showMenu():
     # menu creation
@@ -43,7 +50,9 @@ def showMenu():
        
     # runs program based on the user's input
     if op == 1:
-        runGame()
+        os.system('cls')
+        player1 = input("Digite o nome do jogador: ")
+        runGame(player1, player2, board1, board2)
         showMenu()
     elif op == 2:
         os.system('exit')
