@@ -9,7 +9,7 @@ from colorama import Back, Fore, Style
 colorama.init(autoreset=True)
 
 # game name and creators
-def showpage():
+def showPage():
     os.system('cls')
     # LuckyNumbers logo in AXCII
     print(f"{Fore.GREEN}\n ___      __   __  _______  ___   _  __   __    __    _  __   __  __   __  _______  _______  ______    _______ \n|   |    |  | |  ||       ||   | | ||  | |  |  |  |  | ||  | |  ||  |_|  ||  _    ||       ||    _ |  |       |\n|   |    |  | |  ||       ||   |_| ||  |_|  |  |   |_| ||  | |  ||       || |_|   ||    ___||   | ||  |  _____|\n|   |    |  |_|  ||       ||      _||       |  |       ||  |_|  ||       ||       ||   |___ |   |_||_ | |_____ \n|   |___ |       ||      _||     |_ |_     _|  |  _    ||       ||       ||  _   | |    ___||    __  ||_____  |\n|       ||       ||     |_ |    _  |  |   |    | | |   ||       || ||_|| || |_|   ||   |___ |   |  | | _____| |\n|_______||_______||_______||___| |_|  |___|    |_|  |__||_______||_|   |_||_______||_______||___|  |_||_______|")
@@ -66,5 +66,5 @@ def showMenu():
 
 
 # calling function to start LuckyNumbers 
-showpage()
+showPage()
 showMenu()
