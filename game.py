@@ -141,7 +141,7 @@ def gameTurn(player, board, stack, table):
             while True:         # loops question until user inputs valid number
                 os.system('cls')
                 # Prints table using the stack indexes
-                print(f"{Fore.WHITE}A mesa possui os seguintes trevos")
+                print(f"{Fore.WHITE}A mesa possui os seguintes trevos: ")
                 for i in range(len(table)):         
                     print(stack[table[i]], end= ' ')          # prints table to user
                 num1 = input(f"{Fore.GREEN}\nInsira o trevo que pretende colocar no tabuleiro(1,2,3...): ")
