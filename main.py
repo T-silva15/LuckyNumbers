@@ -71,7 +71,7 @@ def showMenu():
         showMenu()
     elif op == 4:
         os.system('cls')
-        print(f"{Fore.RED}Sessão Terminada!")
+        print(f"{Fore.RED}\nSessão Terminada!\n\n")
         os.system('exit')
 
 # calling function to start LuckyNumbers 

@@ -54,132 +54,6 @@ def drawClover(indClover):
                 break
     return indClover
 
-# function that runs if a player decides to draw a clover from the sack and place it on the board/table 
-def boardPlay(board, stack, table, clover):
-    os.system('cls')
-    showBoard(board, stack)
-    input("Pressione uma tecla para continuar...")
-    while True:         # loops until user inputs a valid board position
-        os.system('cls')
-        print(f"{Fore.BLUE}+-----------------+")
-        print(f"{Fore.BLUE}|  1   2   3   4  |")    
-        print(f"{Fore.BLUE}|-----------------|")
-        print(f"{Fore.BLUE}|  5   6   7   8  |")    
-        print(f"{Fore.BLUE}|-----------------|")
-        print(f"{Fore.BLUE}|  9  10  11   12 |")    
-        print(f"{Fore.BLUE}|-----------------|")
-        print(f"{Fore.BLUE}|  13  14  15  16 |")    
-        print(f"{Fore.BLUE}+-----------------+")
-        pos = (input(f"{Fore.GREEN}Indique a posição no tabuleiro que pretende colocar o trevo(1-16): "))
-        if pos in ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16']:
-            pos = int(pos) - 1
-            break
-    # check if position is occupied / if it is, switch clovers and send old clover to table
-    if board[pos] != 0:
-        if checkPlacement(board, pos, clover, stack) == True:
-            table.append(board[pos])        # send clover to table
-            board[pos] = clover      # put clover on square chosen
-        else:
-            os.system('cls')
-            print(f"{Fore.RED}O trevo não pode ser colocado nesse quadrado!")
-            print(f"{Fore.RED}A reiniciar jogada...")
-            time.sleep(5)
-            boardPlay(board, stack, table, clover)
-    else: 
-        if checkPlacement(board, pos, clover, stack) == True:
-            board[pos] = clover       # put clover on square chosen
-        else:
-            os.system('cls')
-            print(f"{Fore.RED}O trevo não pode ser colocado nesse quadrado!")
-            print(f"{Fore.RED}A reiniciar jogada...")
-            time.sleep(5)
-            boardPlay(board, stack, table, clover)
-
-# function that gives the player a random clover from the stack
-def gameTurn(player, board, stack, table): 
-    dec = 0
-    indClover = 0
-    # Asks user for option (loops until acceptable answer)
-    while True:
-        os.system('cls')
-        print(f"{Fore.WHITE}Turno do", player,"!")
-        print(f"{Fore.RED}1. ",f"{Fore.WHITE}Tirar um trevo do saco")
-        print(f"{Fore.RED}2. ",f"{Fore.WHITE}Escolher um trevo da mesa")
-        dec1 = input(f"{Fore.GREEN}Escolha a sua opção: ")
-        if dec1 in ['1','2']:
-            dec = int(dec1)
-            break
-    # Draw a clover from stack and place it
-    if dec == 1:
-        # draws clover
-        indClover = drawClover(indClover)
-        dec = 0
-        while True:         # loops until user inputs an valid answer
-            os.system('cls')
-            # tells the user what clover was drawn
-            print(f"{Fore.WHITE}O trevo retirado foi um", stack[indClover],"!\n")
-            # prompts the options
-            print(f"{Fore.RED}1. ",f"{Fore.WHITE}Colocar o trevo no tabuleiro")
-            print(f"{Fore.RED}2. ",f"{Fore.WHITE}Colocar o trevo na mesa ")
-            dec1 = input(f"{Fore.GREEN}Escolha a sua opção: ")
-            if dec1 in ['1','2']:
-                dec = int(dec1)
-                break
-            # places on board/play
-        if dec == 1:
-            boardPlay(board, stack, table, indClover)
-        else:
-            os.system('cls')
-            print(f"{Fore.GREEN}Trevo adicionado à mesa!")
-            input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
-            # appends stack index to table
-            table.append(indClover)
-    # draw clover from table and place it
-    else:
-        # checks if table has any clovers, if it does not, forces player to draw from sack
-        if len(table) != 0:
-            num = 1
-            while True:         # loops question until user inputs valid number
-                os.system('cls')
-                # Prints table using the stack indexes
-                print(f"{Fore.WHITE}A mesa possui os seguintes trevos: ")
-                for i in range(len(table)):         
-                    print(stack[table[i]], end= ' ')          # prints table to user
-                num1 = input(f"{Fore.GREEN}\nInsira o trevo que pretende colocar no tabuleiro(1,2,3...): ")
-                if num1 in ['1', str(len(table))]:
-                    num = int(num1) - 1
-                    break       # breaks when user inputs a valid number
-            indClover = table[num]          # "pick up" clover from table
-            table.remove(indClover)         # removes clover that was picked up rom table
-            boardPlay(board, stack, table, indClover)   # calls function to place clover on board
-        else:
-            os.system('cls')
-            print(f"{Fore.RED}A mesa não possui nenhum trevo!")
-            print(f"{Fore.RED}O trevo será retirado do saco!")
-            input(f"{Fore.RED}Pressione uma tecla para continuar...")
-            # draws clover
-            indClover = drawClover(indClover)
-            dec = 0
-            while True:
-                os.system('cls')
-                # tells the user what clover was drawn
-                print(f"{Fore.WHITE}O trevo retirado foi um", stack[indClover],"!\n")
-                # prompts the options
-                print(f"{Fore.RED}1. ",f"{Fore.WHITE}Colocar o trevo no tabuleiro")
-                print(f"{Fore.RED}2. ",f"{Fore.WHITE}Colocar o trevo na mesa ")
-                dec1 = input(f"{Fore.GREEN}Escolha a sua opção: ")
-                if dec1 in ['1','2']:
-                    dec = int(dec1)
-                    break
-                # places on board/play
-            if dec == 1:
-                boardPlay(board, stack, table, indClover)
-            else:
-                os.system('cls')
-                print(f"{Fore.GREEN}Trevo adicionado à mesa!")
-                input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
-                table.append(indClover)
-
 # function that checks if player can place clover in specific position
 def checkPlacement(board, pos, clover, stack):
     # clover in first row
@@ -334,7 +208,207 @@ def checkPlacement(board, pos, clover, stack):
                 board[pos] = prevClover
                 return False
         return True
-    
+
+# funtion that runs when the bot wants to place a clover on the board
+def botBoardPlay(board, stack, table, clover):
+    os.system('cls')
+    showBoard(board, stack)
+    input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
+    os.system('cls')
+    print(f"{Fore.WHITE}O bot está a escolher uma posição...")
+    input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
+    # loops until bot chooses a valid placement
+    while True:
+        pos = random.randint(0,15)
+        if checkPlacement(board, pos, clover, stack) == True:
+            break
+    os.system('cls')
+    print(f"{Fore.WHITE}O bot colocou o trevo na posição", pos + 1)
+    input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
+    # put clover on board
+    board[pos] = clover         
+
+# function that runs when a bot is supposed to play a turn
+def botTurn(bot, board, stack, table):
+    dec = 0
+    indClover = 0
+    os.system('cls')
+    print(f"{Fore.WHITE}Turno do bot!")
+    print(f"{Fore.RED}1. ",f"{Fore.WHITE}Tirar um trevo do saco")
+    print(f"{Fore.RED}2. ",f"{Fore.WHITE}Escolher um trevo da mesa")
+    print(f"{Fore.WHITE}\nO bot está a escolher uma opção...")
+    input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
+    if len(table) != 0:
+        dec = random.randint(1,2)
+    else:
+        dec = 1
+    if dec == 1:
+        os.system('cls')
+        # draws clover
+        indClover = drawClover(indClover)
+        print(f"{Fore.WHITE}O bot decidiu retirar um trevo do saco!")
+        print(f"{Fore.WHITE}O trevo retirado foi um", stack[indClover],"!\n")
+        # prompts the options
+        print(f"{Fore.RED}1. ",f"{Fore.WHITE}Colocar o trevo no tabuleiro")
+        print(f"{Fore.RED}2. ",f"{Fore.WHITE}Colocar o trevo na mesa ")
+        print(f"{Fore.WHITE}\nO bot está a escolher uma opção...")
+        input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
+        clPlace = random.randint(1,2)
+        if clPlace == 1:
+            os.system('cls')
+            print(f"{Fore.WHITE}O bot decidiu colocar o trevo no tabuleiro!")
+            input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
+            botBoardPlay(board, stack, table, indClover)
+        else:
+            os.system('cls')
+            print(f"{Fore.GREEN}O bot adicionou o trevo à mesa!")
+            input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
+            # appends stack index to table
+            table.append(indClover)
+    else:        
+        os.system('cls')
+        print(f"{Fore.WHITE}O bot decidiu retirar um trevo da mesa!")
+        # Prints table using the stack indexes
+        print(f"{Fore.WHITE}A mesa possui os seguintes trevos: ")
+        # prints table to user
+        for i in range(len(table)):         
+            print(stack[table[i]], end= ' ')          
+        print(f"{Fore.WHITE}\nO bot está a escolher uma opção...")
+        input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
+        num = random(0, len(table))
+        os.system('cls')
+        print(f"{Fore.WHITE}\nO bot escolheu o trevo", stack[table[num]],"!")
+        input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
+        indClover = table[num]          # "pick up" clover from table
+        table.remove(indClover)         # removes clover that was picked up rom table
+        botBoardPlay(board, stack, table, indClover)   # calls function for bot to place clover on board
+
+# function that runs if a player decides to draw a clover from the sack and place it on the board 
+def boardPlay(board, stack, table, clover):
+    os.system('cls')
+    showBoard(board, stack)
+    input(f"{Fore.WHITE}Pressione uma tecla para continuar...")
+    while True:         # loops until user inputs a valid board position
+        os.system('cls')
+        print(f"{Fore.BLUE}+-----------------+")
+        print(f"{Fore.BLUE}|  1   2   3   4  |")    
+        print(f"{Fore.BLUE}|-----------------|")
+        print(f"{Fore.BLUE}|  5   6   7   8  |")    
+        print(f"{Fore.BLUE}|-----------------|")
+        print(f"{Fore.BLUE}|  9  10  11   12 |")    
+        print(f"{Fore.BLUE}|-----------------|")
+        print(f"{Fore.BLUE}|  13  14  15  16 |")    
+        print(f"{Fore.BLUE}+-----------------+")
+        pos = (input(f"{Fore.GREEN}Indique a posição no tabuleiro que pretende colocar o trevo(1-16): "))
+        if pos in ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16']:
+            pos = int(pos) - 1
+            break
+    # check if position is occupied / if it is, switch clovers and send old clover to table
+    if board[pos] != 0:
+        if checkPlacement(board, pos, clover, stack) == True:
+            table.append(board[pos])        # send clover to table
+            board[pos] = clover      # put clover on square chosen
+        else:
+            os.system('cls')
+            print(f"{Fore.RED}O trevo não pode ser colocado nesse quadrado!")
+            print(f"{Fore.RED}A reiniciar jogada...")
+            time.sleep(5)
+            boardPlay(board, stack, table, clover)
+    else: 
+        if checkPlacement(board, pos, clover, stack) == True:
+            board[pos] = clover       # put clover on square chosen
+        else:
+            os.system('cls')
+            print(f"{Fore.RED}O trevo não pode ser colocado nesse quadrado!")
+            print(f"{Fore.RED}A reiniciar jogada...")
+            time.sleep(5)
+            boardPlay(board, stack, table, clover)
+
+# function responsible for every action in a player's turn (drawing clover and placing it on board/table) 
+def gameTurn(player, board, stack, table): 
+    dec = 0
+    indClover = 0
+    # Asks user for option (loops until acceptable answer)
+    while True:
+        os.system('cls')
+        print(f"{Fore.WHITE}Turno do", player,"!")
+        print(f"{Fore.RED}1. ",f"{Fore.WHITE}Tirar um trevo do saco")
+        print(f"{Fore.RED}2. ",f"{Fore.WHITE}Escolher um trevo da mesa")
+        dec1 = input(f"{Fore.GREEN}Escolha a sua opção: ")
+        if dec1 in ['1','2']:
+            dec = int(dec1)
+            break
+    # Draw a clover from stack and place it
+    if dec == 1:
+        # draws clover
+        indClover = drawClover(indClover)
+        dec = 0
+        while True:         # loops until user inputs an valid answer
+            os.system('cls')
+            # tells the user what clover was drawn
+            print(f"{Fore.WHITE}O trevo retirado foi um", stack[indClover],"!\n")
+            # prompts the options
+            print(f"{Fore.RED}1. ",f"{Fore.WHITE}Colocar o trevo no tabuleiro")
+            print(f"{Fore.RED}2. ",f"{Fore.WHITE}Colocar o trevo na mesa ")
+            dec1 = input(f"{Fore.GREEN}Escolha a sua opção: ")
+            if dec1 in ['1','2']:
+                dec = int(dec1)
+                break
+            # places on board/play
+        if dec == 1:
+            boardPlay(board, stack, table, indClover)
+        else:
+            os.system('cls')
+            print(f"{Fore.GREEN}Trevo adicionado à mesa!")
+            input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
+            # appends stack index to table
+            table.append(indClover)
+    # draw clover from table and place it
+    else:
+        # checks if table has any clovers, if it does not, forces player to draw from sack
+        if len(table) != 0:
+            num = 1
+            while True:         # loops question until user inputs valid number
+                os.system('cls')
+                # Prints table using the stack indexes
+                print(f"{Fore.WHITE}A mesa possui os seguintes trevos: ")
+                for i in range(len(table)):         
+                    print(stack[table[i]], end= ' ')          # prints table to user
+                num1 = input(f"{Fore.GREEN}\nInsira o trevo que pretende colocar no tabuleiro(1,2,3...): ")
+                if num1 in [str(i + 1 for i in range(len(table)))]:
+                    num = int(num1) - 1
+                    break       # breaks when user inputs a valid number
+            indClover = table[num]          # "pick up" clover from table
+            table.remove(indClover)         # removes clover that was picked up rom table
+            boardPlay(board, stack, table, indClover)   # calls function to place clover on board
+        else:
+            os.system('cls')
+            print(f"{Fore.RED}A mesa não possui nenhum trevo!")
+            print(f"{Fore.RED}O trevo será retirado do saco!")
+            input(f"{Fore.RED}Pressione uma tecla para continuar...")
+            # draws clover
+            indClover = drawClover(indClover)
+            dec = 0
+            while True:
+                os.system('cls')
+                # tells the user what clover was drawn
+                print(f"{Fore.WHITE}O trevo retirado foi um", stack[indClover],"!\n")
+                # prompts the options
+                print(f"{Fore.RED}1. ",f"{Fore.WHITE}Colocar o trevo no tabuleiro")
+                print(f"{Fore.RED}2. ",f"{Fore.WHITE}Colocar o trevo na mesa ")
+                dec1 = input(f"{Fore.GREEN}Escolha a sua opção: ")
+                if dec1 in ['1','2']:
+                    dec = int(dec1)
+                    break
+                # places on board/play
+            if dec == 1:
+                boardPlay(board, stack, table, indClover)
+            else:
+                os.system('cls')
+                print(f"{Fore.GREEN}Trevo adicionado à mesa!")
+                input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
+                table.append(indClover)
+                          
 # functions that runs two player game
 def twoPlayerGame(player1, player2, board1, board2):    
     # Board creation 
@@ -395,22 +469,23 @@ def botGame(player1, board1, board2):
     if dec == 0:
         # Loop that ends when any of the boards is full
         while True:
+            # Turn order player - bot
             gameTurn(player1, board1, stack, table)
-            gameTurn(player2, board2, stack, table)
+            botTurn(player2, board2, stack, table)
             # Check if all entries are different from zero, if they are, player1 has won!
             if all(value != 0 for value in board1):
                 print(f"{Fore.RED}O Jogador", player1, "é o Vencedor!")
                 break
             # Check if all entries are different from zero, if they are, player2 has won!
             elif all(value != 0 for value in board2):
-                print(f"{Fore.RED}O jogador", player2,"é o Vencedor!")
+                print(f"{Fore.RED}O bot é o Vencedor!")
                 break 
     # bot starts        
     else:
         # Loop that ends when any of the boards is full
         while True:
-            # Displaying both boards
-            gameTurn(player2, board2, stack, table)
+            # Turn order bot - player 
+            botTurn(player2, board2, stack, table)
             gameTurn(player1, board1, stack, table)
             # Check if all entries are different from zero, if they are, player1 has won!
             if all(value != 0 for value in board1):
@@ -418,7 +493,7 @@ def botGame(player1, board1, board2):
                 break
             # Check if all entries are different from zero, if they are, player2 has won!
             elif all(value != 0 for value in board2):
-                print(f"{Fore.RED}O jogador", player2,"é o Vencedor!")
+                print(f"{Fore.RED}O bot é o Vencedor!")
                 break
 
 
