@@ -60,11 +60,9 @@ def showMenu():
     if op == 1:
         x = chooseGame()
         if x == 1:
-            player1 = input(f"{Fore.GREEN}Digite o nome do primeiro jogador: ")
-            player2 = input(f"{Fore.GREEN}Digite o nome do segundo jogador: ")
             twoPlayerGame(player1, player2, board1, board2)
         else:
-            player1 = input(f"{Fore.GREEN}Digite o nome do primeiro jogador: ")
+            botGame(player1, board1, board2)
             
     elif op == 2:
         os.system('exit')

@@ -8,7 +8,7 @@ from colorama import Back, Fore, Style
 colorama.init(autoreset=True)
 
 # function to show the board of a given player
-def showBoard(board):
+def showBoard(board, stack):
     rows = 4
     cols = 4
     print(f"{Fore.WHITE}")
@@ -18,7 +18,8 @@ def showBoard(board):
         print("|", end=" ")  # Print the left border
         for j in range(cols):
             index = i * cols + j
-            print(f"{board[index]:2}", end=" ")
+            index1 = board[index]
+            print(f"{stack[index1]:2}", end=" ")
         print("|")  # Print the right border
 
         if i < rows - 1:
@@ -46,7 +47,7 @@ def drawClover(indClover):
     while True:
             pastIndex = []
             # draws random clover from the sack
-            indClover = random.randint(0,39)
+            indClover = random.randint(1,40)
             # if clover hasn't been drawn before adds it to the list of drawn clovers and breaks out of the loop
             if indClover not in pastIndex:
                 pastIndex.append(indClover)
@@ -56,7 +57,7 @@ def drawClover(indClover):
 # function that runs if a player decides to draw a clover from the sack and place it on the board/table 
 def boardPlay(board, stack, table, clover):
     os.system('cls')
-    showBoard(board)
+    showBoard(board, stack)
     input("Pressione uma tecla para continuar...")
     while True:         # loops until user inputs a valid board position
         os.system('cls')
@@ -76,8 +77,8 @@ def boardPlay(board, stack, table, clover):
     # check if position is occupied / if it is, switch clovers and send old clover to table
     if board[pos] != 0:
         if checkPlacement(board, pos, clover, stack) == True:
-            table.append(stack[board[pos]])        # send clover to table
-            board[pos] = stack[clover]      # put clover on square chosen
+            table.append(board[pos])        # send clover to table
+            board[pos] = clover      # put clover on square chosen
         else:
             os.system('cls')
             print(f"{Fore.RED}O trevo não pode ser colocado nesse quadrado!")
@@ -86,7 +87,7 @@ def boardPlay(board, stack, table, clover):
             boardPlay(board, stack, table, clover)
     else: 
         if checkPlacement(board, pos, clover, stack) == True:
-            board[pos] = stack[clover]       # put clover on square chosen
+            board[pos] = clover       # put clover on square chosen
         else:
             os.system('cls')
             print(f"{Fore.RED}O trevo não pode ser colocado nesse quadrado!")
@@ -185,7 +186,7 @@ def checkPlacement(board, pos, clover, stack):
     if pos >= 0 and pos <= 3:
         # stores previous clover in position
         prevClover = board[pos]
-        board[pos] = stack[clover]
+        board[pos] = clover
         below = 3          # 3 clover below
         left = 0           # clover counter
         # counts how many clovers are on the left of the position
@@ -201,17 +202,17 @@ def checkPlacement(board, pos, clover, stack):
         right = 4 - left - 1
         # checks if number is higher that the numbers to its left
         for j in range(pos, pos - left - 1, -1):
-            if board[j] > board[pos]:
+            if stack[board[j]] > stack[board[pos]]:
                 board[pos] = prevClover
                 return False
         # checks if number is lower that the numbers to its right (excluding 0)
         for h in range(pos, pos + right + 1, 1):
-            if board[h] < board[pos] and board[h] != 0:
+            if stack[board[h]] < stack[board[pos]] and stack[board[h]] != 0:
                 board[pos] = prevClover
                 return False
         # checks if number is higher that the numbers below it (excluding 0)    
         for l in range(pos, pos + below * 4 + 4, 4):
-            if board[l] < board[pos] and board[l] != 0:
+            if stack[board[l]] < stack[board[pos]] and stack[board[l]] != 0:
                 board[pos] = prevClover
                 return False
         return True
@@ -219,7 +220,7 @@ def checkPlacement(board, pos, clover, stack):
     elif pos >= 4 and pos <= 7:
          # stores previous clover in position
         prevClover = board[pos]
-        board[pos] = stack[clover]
+        board[pos] = clover
         below = 2           # 2 clover below          
         above = 1           # 1 clover above
         left = 0            # clover counter
@@ -237,22 +238,22 @@ def checkPlacement(board, pos, clover, stack):
         right = 4 - left - 1
         # checks if number is higher that the numbers to its left
         for j in range(pos, pos - left - 1, -1):
-            if board[j] > board[pos]:
+            if stack[board[j]] > stack[board[pos]]:
                 board[pos] = prevClover
                 return False
         # checks if number is lower that the numbers to its right
         for h in range(pos, pos + right + 1, 1):
-            if board[h] < board[pos] and board[h] != 0:
+            if stack[board[h]] < stack[board[pos]] and stack[board[h]] != 0:
                 board[pos] = prevClover
                 return False
         # checks if number is higher that the numbers below it     
         for l in range(pos, pos + below * 4 + 4, 4):
-            if board[l] < board[pos] and board[l] != 0:
+            if stack[board[l]] < stack[board[pos]] and stack[board[l]] != 0:
                 board[pos] = prevClover
                 return False
         # checks if number is lower that the numbers above it
         for p in range(pos, pos - above * 4 - 4, -4):
-            if board[p] > board[pos]:
+            if stack[board[p]] > stack[board[pos]]:
                 board[pos] = prevClover
                 return False
         return True
@@ -260,7 +261,7 @@ def checkPlacement(board, pos, clover, stack):
     elif pos >= 8 and pos <= 11:
         # stores previous clover in position
         prevClover = board[pos]
-        board[pos] = stack[clover]
+        board[pos] = clover
         below = 1           # 1 clover below          
         above = 2           # 2 clover above
         left = 0            # clover counter
@@ -278,22 +279,22 @@ def checkPlacement(board, pos, clover, stack):
         right = 4 - left - 1
         # checks if number is higher that the numbers to its left
         for j in range(pos, pos - left - 1, -1):
-            if board[j] > board[pos]:
+            if stack[board[j]] > stack[board[pos]]:
                 board[pos] = prevClover
                 return False
         # checks if number is lower that the numbers to its right
         for h in range(pos, pos + right + 1, 1):
-            if board[h] < board[pos] and board[h] != 0:
+            if stack[board[h]] < stack[board[pos]] and stack[board[h]] != 0:
                 board[pos] = prevClover
                 return False
         # checks if number is higher that the numbers below it     
         for l in range(pos, pos + below * 4 + 4, 4):
-            if board[l] < board[pos] and board[l] != 0:
+            if stack[board[l]] < stack[board[pos]] and stack[board[l]] != 0:
                 board[pos] = prevClover
                 return False
         # checks if number is lower that the numbers above it
         for p in range(pos, pos - above * 4 - 4, -4):
-            if board[p] > board[pos]:
+            if stack[board[p]] > stack[board[pos]]:
                 board[pos] = prevClover
                 return False
         return True
@@ -301,7 +302,7 @@ def checkPlacement(board, pos, clover, stack):
     else:
         # stores previous clover in position
         prevClover = board[pos]
-        board[pos] = stack[clover]
+        board[pos] = clover
         # clover in second row         
         above = 3           # 3 clover above
         left = 0            # clover counter
@@ -319,17 +320,17 @@ def checkPlacement(board, pos, clover, stack):
         right = 4 - left - 1
         # checks if number is higher that the numbers to its left
         for j in range(pos, pos - left - 1, -1):
-            if board[j] > board[pos]:
+            if stack[board[j]] > stack[board[pos]]:
                 board[pos] = prevClover
                 return False
         # checks if number is lower that the numbers to its right
         for h in range(pos, pos + right + 1, 1):
-            if board[h] < board[pos] and board[h] != 0:
+            if stack[board[h]] < stack[board[pos]] and stack[board[h]] != 0:
                 board[pos] = prevClover
                 return False
         # checks if number is lower that the numbers above it
         for p in range(pos, pos - above * 4 - 4, -4):
-            if board[p] > board[pos]:
+            if stack[board[p]] > stack[board[pos]]:
                 board[pos] = prevClover
                 return False
         return True
@@ -337,9 +338,13 @@ def checkPlacement(board, pos, clover, stack):
 # functions that runs two player game
 def twoPlayerGame(player1, player2, board1, board2):    
     # Board creation 
-    stack = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,18,19,19,20,20]
+    stack = [0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,18,19,19,20,20]
     table = []  
 
+    os.system('cls')
+    # initialize players
+    player1 = input(f"{Fore.GREEN}Digite o nome do primeiro jogador: ")
+    player2 = input(f"{Fore.GREEN}\nDigite o nome do segundo jogador: ")
     # decide who starts
     dec = coinflip(player1, player2)
     input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
@@ -374,5 +379,46 @@ def twoPlayerGame(player1, player2, board1, board2):
                 break 
 
 # function that runs game against bot
-def botGame(player1, player2, board1, board2):
-    print("x")
+def botGame(player1, board1, board2):
+    # Board creation 
+    stack = [0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,18,19,19,20,20]
+    table = [] 
+
+    os.system('cls')
+    # initialize players
+    player1 = input(f"{Fore.GREEN}Digite o nome do primeiro jogador: ")
+    player2 = "BOT"
+    # decide who starts
+    dec = coinflip(player1, player2)
+    input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
+    # player starts
+    if dec == 0:
+        # Loop that ends when any of the boards is full
+        while True:
+            gameTurn(player1, board1, stack, table)
+            gameTurn(player2, board2, stack, table)
+            # Check if all entries are different from zero, if they are, player1 has won!
+            if all(value != 0 for value in board1):
+                print(f"{Fore.RED}O Jogador", player1, "é o Vencedor!")
+                break
+            # Check if all entries are different from zero, if they are, player2 has won!
+            elif all(value != 0 for value in board2):
+                print(f"{Fore.RED}O jogador", player2,"é o Vencedor!")
+                break 
+    # bot starts        
+    else:
+        # Loop that ends when any of the boards is full
+        while True:
+            # Displaying both boards
+            gameTurn(player2, board2, stack, table)
+            gameTurn(player1, board1, stack, table)
+            # Check if all entries are different from zero, if they are, player1 has won!
+            if all(value != 0 for value in board1):
+                print(f"{Fore.RED}O Jogador", player1, "é o Vencedor!")
+                break
+            # Check if all entries are different from zero, if they are, player2 has won!
+            elif all(value != 0 for value in board2):
+                print(f"{Fore.RED}O jogador", player2,"é o Vencedor!")
+                break
+
+
