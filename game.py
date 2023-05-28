@@ -414,12 +414,12 @@ def PvPp1Start(player1, board1, player2, board2, stack, table, pastIndex):
         while True:
             # Player 1 turn
             os.system('cls')
-            print(f"{Fore.WHITE}Turno do ", player1)
+            print(f"{Fore.BLUE}Turno do ", player1)
             savePrompt(1, 'PvP', player1, board1, player2, board2, table, pastIndex)
             gameTurn(player1, board1, stack, table, pastIndex)
             # Player 2 turn
             os.system('cls')
-            print(f"{Fore.WHITE}Turno do ", player2)
+            print(f"{Fore.BLUE}Turno do ", player2)
             savePrompt(2, 'PvP', player1, board1, player2, board2, table, pastIndex)
             gameTurn(player2, board2, stack, table,pastIndex)
             # Check if all entries are different from zero, if they are, player1 has won!
@@ -437,12 +437,12 @@ def PvPp2Start(player1, board1, player2, board2, stack, table, pastIndex):
         while True:
             # Player 2 turn
             os.system('cls')
-            print(f"{Fore.WHITE}Turno do ", player2)
+            print(f"{Fore.BLUE}Turno do ", player2)
             savePrompt(2, 'PvP', player1, board1, player2, board2, table, pastIndex)
             gameTurn(player2, board2, stack, table, pastIndex)
             # Player 1 turn
             os.system('cls')
-            print(f"{Fore.WHITE}Turno do ", player1)
+            print(f"{Fore.BLUE}Turno do ", player1)
             savePrompt(1, 'PvP', player1, board1, player2, board2, table, pastIndex)
             gameTurn(player1, board1, stack, table, pastIndex)
             # Check if all entries are different from zero, if they are, player1 has won!
@@ -460,7 +460,7 @@ def PvEp1Start(player1, board1, player2, board2, stack, table, pastIndex):
         while True:
             os.system('cls')
             # Turn order player - bot
-            print(f"{Fore.WHITE}Turno do ", player1)
+            print(f"{Fore.BLUE}Turno do ", player1)
             savePrompt(1, 'PvE', player1, board1, player2, board2, table, pastIndex)
             gameTurn(player1, board1, stack, table, pastIndex)
             botTurn(player2, board2, stack, table, pastIndex)
@@ -480,7 +480,7 @@ def PvEbotStart(player1, board1, player2, board2, stack, table, pastIndex):
             # Turn order bot - player 
             botTurn(player2, board2, stack, table, pastIndex)
             os.system('cls')
-            print(f"{Fore.WHITE}Turno do ", player1)
+            print(f"{Fore.BLUE}Turno do ", player1)
             savePrompt(2, 'PvE', player1, board1, player2, board2, table, pastIndex)
             gameTurn(player1, board1, stack, table, pastIndex)
             # Check if all entries are different from zero, if they are, player1 has won!
