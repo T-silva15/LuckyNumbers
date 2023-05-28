@@ -41,7 +41,7 @@ def coinflip(player1, player2):
         print(f"{Fore.BLUE}O jogador", player2, f"{Fore.BLUE}é o primeiro a jogar!\n")
     return coin
 
-# draw clover
+# function that draws a clover
 def drawClover(indClover, pastIndex):
     # loops until an accetpable clover is drawn
     while True:
@@ -374,7 +374,8 @@ def gameTurn(player, board, stack, table, pastIndex):
                 for i in range(len(table)):         
                     print(stack[table[i]], end= ' ')          # prints table to user
                 num1 = input(f"{Fore.GREEN}\nInsira o trevo que pretende colocar no tabuleiro(1,2,3...): ")
-                if num1 in [str(i + 1 for i in range(len(table)))]:
+                table_length = [str(i) for i in range(1, len(table) + 1)]
+                if num1 in table_length:
                     num = int(num1) - 1
                     break       # breaks when user inputs a valid number
             indClover = table[num]          # "pick up" clover from table
@@ -414,12 +415,10 @@ def PvPp1Start(player1, board1, player2, board2, stack, table, pastIndex):
         while True:
             # Player 1 turn
             os.system('cls')
-            print(f"{Fore.BLUE}Turno do", player1)
             savePrompt(1, 'PvP', player1, board1, player2, board2, table, pastIndex)
             gameTurn(player1, board1, stack, table, pastIndex)
             # Player 2 turn
             os.system('cls')
-            print(f"{Fore.BLUE}Turno do", player2)
             savePrompt(2, 'PvP', player1, board1, player2, board2, table, pastIndex)
             gameTurn(player2, board2, stack, table,pastIndex)
             # Check if all entries are different from zero, if they are, player1 has won!
@@ -437,12 +436,10 @@ def PvPp2Start(player1, board1, player2, board2, stack, table, pastIndex):
         while True:
             # Player 2 turn
             os.system('cls')
-            print(f"{Fore.BLUE}Turno do", player2)
             savePrompt(2, 'PvP', player1, board1, player2, board2, table, pastIndex)
             gameTurn(player2, board2, stack, table, pastIndex)
             # Player 1 turn
             os.system('cls')
-            print(f"{Fore.BLUE}Turno do", player1)
             savePrompt(1, 'PvP', player1, board1, player2, board2, table, pastIndex)
             gameTurn(player1, board1, stack, table, pastIndex)
             # Check if all entries are different from zero, if they are, player1 has won!
@@ -460,7 +457,6 @@ def PvEp1Start(player1, board1, player2, board2, stack, table, pastIndex):
         while True:
             os.system('cls')
             # Turn order player - bot
-            print(f"{Fore.BLUE}Turno do ", player1)
             savePrompt(1, 'PvE', player1, board1, player2, board2, table, pastIndex)
             gameTurn(player1, board1, stack, table, pastIndex)
             botTurn(player2, board2, stack, table, pastIndex)
@@ -492,10 +488,15 @@ def PvEbotStart(player1, board1, player2, board2, stack, table, pastIndex):
                 print(f"{Fore.RED}O bot é o Vencedor!")
                 break
  
-# funtion that asks player if he wants to save the game       
+# function that asks player if he wants to save the game       
 def savePrompt(pIdentifier, gIdentifer, player1, board1, player2, board2, table, pastIndex):
     # loops question until player inputs valid answer
     while True:
+        os.system('cls')
+        if pIdentifier == 1:
+            print(f"{Fore.BLUE}Turno do", player1)
+        else:
+            print(f"{Fore.BLUE}Turno do", player2)
         save = input(f"{Fore.BLUE}Pretende salvar o jogo? (S/N): ")
         if save in ['S', 's']:
             saveGame(pIdentifier, gIdentifer, player1, board1, player2, board2, table, pastIndex)
