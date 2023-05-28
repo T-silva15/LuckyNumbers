@@ -42,10 +42,9 @@ def coinflip(player1, player2):
     return coin
 
 # draw clover
-def drawClover(indClover):
+def drawClover(indClover, pastIndex):
     # loops until an accetpable clover is drawn
     while True:
-            pastIndex = []
             # draws random clover from the sack
             indClover = random.randint(1,40)
             # if clover hasn't been drawn before adds it to the list of drawn clovers and breaks out of the loop
@@ -229,7 +228,7 @@ def botBoardPlay(board, stack, table, clover):
     board[pos] = clover         
 
 # function that runs when a bot is supposed to play a turn
-def botTurn(bot, board, stack, table):
+def botTurn(bot, board, stack, table, pastIndex):
     dec = 0
     indClover = 0
     os.system('cls')
@@ -245,7 +244,7 @@ def botTurn(bot, board, stack, table):
     if dec == 1:
         os.system('cls')
         # draws clover
-        indClover = drawClover(indClover)
+        indClover = drawClover(indClover, pastIndex)
         print(f"{Fore.WHITE}O bot decidiu retirar um trevo do saco!")
         print(f"{Fore.WHITE}O trevo retirado foi um", stack[indClover],"!\n")
         # prompts the options
@@ -325,7 +324,7 @@ def boardPlay(board, stack, table, clover):
             boardPlay(board, stack, table, clover)
 
 # function responsible for every action in a player's turn (drawing clover and placing it on board/table) 
-def gameTurn(player, board, stack, table): 
+def gameTurn(player, board, stack, table, pastIndex): 
     dec = 0
     indClover = 0
     # Asks user for option (loops until acceptable answer)
@@ -341,7 +340,7 @@ def gameTurn(player, board, stack, table):
     # Draw a clover from stack and place it
     if dec == 1:
         # draws clover
-        indClover = drawClover(indClover)
+        indClover = drawClover(indClover, pastIndex)
         dec = 0
         while True:         # loops until user inputs an valid answer
             os.system('cls')
@@ -387,7 +386,7 @@ def gameTurn(player, board, stack, table):
             print(f"{Fore.RED}O trevo será retirado do saco!")
             input(f"{Fore.RED}Pressione uma tecla para continuar...")
             # draws clover
-            indClover = drawClover(indClover)
+            indClover = drawClover(indClover, pastIndex)
             dec = 0
             while True:
                 os.system('cls')
@@ -408,13 +407,203 @@ def gameTurn(player, board, stack, table):
                 print(f"{Fore.GREEN}Trevo adicionado à mesa!")
                 input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
                 table.append(indClover)
-                          
+
+# function that runs when player 1 is the first to play (PvP)
+def PvPp1Start(player1, board1, player2, board2, stack, table, pastIndex):
+    # Loop that ends when any of the boards is full
+        while True:
+            # Player 1 turn
+            os.system('cls')
+            print(f"{Fore.WHITE}Turno do ", player1)
+            savePrompt(1, 'PvP', player1, board1, player2, board2, table, pastIndex)
+            gameTurn(player1, board1, stack, table, pastIndex)
+            # Player 2 turn
+            os.system('cls')
+            print(f"{Fore.WHITE}Turno do ", player2)
+            savePrompt(2, 'PvP', player1, board1, player2, board2, table, pastIndex)
+            gameTurn(player2, board2, stack, table,pastIndex)
+            # Check if all entries are different from zero, if they are, player1 has won!
+            if all(value != 0 for value in board1):
+                print(f"{Fore.RED}O Jogador", player1, "é o Vencedor!")
+                break
+            # Check if all entries are different from zero, if they are, player2 has won!
+            elif all(value != 0 for value in board2):
+                print(f"{Fore.RED}O jogador", player2,"é o Vencedor!")
+                break
+
+# function that runs when player 2 is the first to play (PvP)
+def PvPp2Start(player1, board1, player2, board2, stack, table, pastIndex):
+    # Loop that ends when any of the boards is full
+        while True:
+            # Player 2 turn
+            os.system('cls')
+            print(f"{Fore.WHITE}Turno do ", player2)
+            savePrompt(2, 'PvP', player1, board1, player2, board2, table, pastIndex)
+            gameTurn(player2, board2, stack, table, pastIndex)
+            # Player 1 turn
+            os.system('cls')
+            print(f"{Fore.WHITE}Turno do ", player1)
+            savePrompt(1, 'PvP', player1, board1, player2, board2, table, pastIndex)
+            gameTurn(player1, board1, stack, table, pastIndex)
+            # Check if all entries are different from zero, if they are, player1 has won!
+            if all(value != 0 for value in board1):
+                print(f"{Fore.RED}O Jogador", player1, "é o Vencedor!")
+                break
+            # Check if all entries are different from zero, if they are, player2 has won!
+            elif all(value != 0 for value in board2):
+                print(f"{Fore.RED}O jogador", player2,"é o Vencedor!")
+                break
+ 
+# function that runs when player 1 is the first to play (PvE)
+def PvEp1Start(player1, board1, player2, board2, stack, table, pastIndex):
+    # Loop that ends when any of the boards is full
+        while True:
+            os.system('cls')
+            # Turn order player - bot
+            print(f"{Fore.WHITE}Turno do ", player1)
+            savePrompt(1, 'PvE', player1, board1, player2, board2, table, pastIndex)
+            gameTurn(player1, board1, stack, table, pastIndex)
+            botTurn(player2, board2, stack, table, pastIndex)
+            # Check if all entries are different from zero, if they are, player1 has won!
+            if all(value != 0 for value in board1):
+                print(f"{Fore.RED}O Jogador", player1, "é o Vencedor!")
+                break
+            # Check if all entries are different from zero, if they are, player2 has won!
+            elif all(value != 0 for value in board2):
+                print(f"{Fore.RED}O bot é o Vencedor!")
+                break  
+
+# function that runs when player 2 is the first to play (PvE)
+def PvEbotStart(player1, board1, player2, board2, stack, table, pastIndex):
+    # Loop that ends when any of the boards is full
+        while True:
+            # Turn order bot - player 
+            botTurn(player2, board2, stack, table, pastIndex)
+            os.system('cls')
+            print(f"{Fore.WHITE}Turno do ", player1)
+            savePrompt(2, 'PvE', player1, board1, player2, board2, table, pastIndex)
+            gameTurn(player1, board1, stack, table, pastIndex)
+            # Check if all entries are different from zero, if they are, player1 has won!
+            if all(value != 0 for value in board1):
+                print(f"{Fore.RED}O Jogador", player1, "é o Vencedor!")
+                break
+            # Check if all entries are different from zero, if they are, player2 has won!
+            elif all(value != 0 for value in board2):
+                print(f"{Fore.RED}O bot é o Vencedor!")
+                break
+ 
+# funtion that asks player if he wants to save the game       
+def savePrompt(pIdentifier, gIdentifer, player1, board1, player2, board2, table, pastIndex):
+    # loops question until player inputs valid answer
+    while True:
+        save = input(f"{Fore.BLUE}Pretende salvar o jogo? (S/N): ")
+        if save in ['S', 's']:
+            saveGame(pIdentifier, gIdentifer, player1, board1, player2, board2, table, pastIndex)
+            break
+        elif save in ['N', 'n']:
+            break                 
+ 
+# function that saves the game in a file 
+def saveGame(pIdentifier, gIdentifer, player1, board1, player2, board2, table, pastIndex):
+    # creates unique file, making sure it doesn't overwrite any previous save
+    timestamp = time.strftime("%Y%m%d%H%M%S")       # create unique signature
+    short_timestamp = timestamp[-3:]  # make the signature smaller,
+    # create file
+    filename = f"save\save{short_timestamp}.txt"
+    # store variables in file
+    with open(filename, 'w') as save: 
+        save.write(str(pIdentifier) + '\n')         # player identifier
+        save.write(str(gIdentifer) + '\n')         # game type identifier
+        save.write(str(player1) + '\n')         # player 1 name
+        save.write(str(board1) + '\n')          # player 1 board
+        save.write(str(player2) + '\n')         # player 2 name
+        save.write(str(board2) + '\n')          # player 2 board
+        # if list is empty, simply write 0
+        if table == []:
+            save.write(str(0) + '\n')
+        else:
+            save.write(str(table) + '\n')       # table
+        # if list is empty, simply write 0
+        if pastIndex == []:
+            save.write(str(0) + '\n')
+        else:
+            save.write(str(pastIndex) + '\n')       # clovers previously drawn
+            
+    print(f"{Fore.GREEN}Ficheiro salvo com sucesso!")
+    input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
+             
+# function to load game from a savefile             
+def loadGame():
+    while True:
+        # save file name input
+        os.system('cls')
+        savename = input(f"{Fore.BLUE}Introduza o nome do ficheiro: ")
+        filename = "save/" + savename + ".txt"
+        # checks if save file with that name exists
+        if os.path.exists(filename) == True:
+            break
+        else:
+            print(f"{Fore.RED}Ficheiro não encontrado!")
+            input(f"{Fore.RED}Tente novamente, pressione qualquer tecla para continuar...")
+    
+    with open(filename, 'r') as save:
+        lines = save.readlines()
+
+    pIdentifier = lines[0].strip()      # player turn indicator
+    gIdentifier = lines[1].strip()      # game type indicator
+    player1 = lines[2].strip()          # player 1 name
+    
+    board1 = lines[3].strip()           # player 1 board
+    # converts list from string to integers
+    board1 = board1.strip('[]').split(',')
+    board1 = [int(num) for num in board1]
+    
+    player2 = lines[4].strip()          # player 2 name
+    
+    board2 = lines[5].strip()           # player 2 board
+    # converts list from string to integers
+    board2 = board2.strip('[]').split(',')
+    board2 = [int(num) for num in board2]
+    
+    table = lines[6].strip()            # table
+    # checks if list is empty
+    if table == '0':
+        table = []
+    else:
+        # converts list from string to integers
+        table = table.strip('[]').split(',')
+        table = [int(num) for num in table]
+    
+    pastIndex = lines[7].strip()        # clovers previously drawn
+    # checks if list is empty
+    if pastIndex == '0':
+        pastIndex = []
+    else:
+        # converts list from string to integers
+        pastIndex = pastIndex.strip('[]').split(',')
+        pastIndex = [int(num) for num in pastIndex]
+                
+    stack = [0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,18,19,19,20,20]
+    
+    # player vs. player
+    if gIdentifier == 'PvP':
+        # player 1 moves first
+        if pIdentifier == '1':
+            PvPp1Start(player1, board1, player2, board2, stack, table, pastIndex)
+        # player 2 moves first
+        else:
+            PvPp2Start(player1, board1, player2, board2, stack, table, pastIndex)
+    # player vs. bot
+    else:
+        PvEp1Start(player1, board1, player2, board2, stack, table, pastIndex)
+
 # functions that runs two player game
-def twoPlayerGame(player1, player2, board1, board2):    
+def twoPlayerGame(player1, player2, board1, board2):
     # Board creation 
     stack = [0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,18,19,19,20,20]
-    table = []  
-
+    table = []
+    pastIndex = []  
+    
     os.system('cls')
     # initialize players
     player1 = input(f"{Fore.GREEN}Digite o nome do primeiro jogador: ")
@@ -422,42 +611,19 @@ def twoPlayerGame(player1, player2, board1, board2):
     # decide who starts
     dec = coinflip(player1, player2)
     input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
-    # player starts
+    
     if dec == 0:
-        # Loop that ends when any of the boards is full
-        while True:
-            gameTurn(player1, board1, stack, table)
-            gameTurn(player2, board2, stack, table)
-            # Check if all entries are different from zero, if they are, player1 has won!
-            if all(value != 0 for value in board1):
-                print(f"{Fore.RED}O Jogador", player1, "é o Vencedor!")
-                break
-            # Check if all entries are different from zero, if they are, player2 has won!
-            elif all(value != 0 for value in board2):
-                print(f"{Fore.RED}O jogador", player2,"é o Vencedor!")
-                break 
-    # bot starts        
+        PvPp1Start(player1, board1, player2, board2, stack, table, pastIndex)  # player 1 starts      
     else:
-        # Loop that ends when any of the boards is full
-        while True:
-            # Displaying both boards
-            gameTurn(player2, board2, stack, table)
-            gameTurn(player1, board1, stack, table)
-            # Check if all entries are different from zero, if they are, player1 has won!
-            if all(value != 0 for value in board1):
-                print(f"{Fore.RED}O Jogador", player1, "é o Vencedor!")
-                break
-            # Check if all entries are different from zero, if they are, player2 has won!
-            elif all(value != 0 for value in board2):
-                print(f"{Fore.RED}O jogador", player2,"é o Vencedor!")
-                break 
+        PvPp2Start(player1, board1, player2, board2, stack, table, pastIndex)  # player 2 starts
 
 # function that runs game against bot
 def botGame(player1, board1, board2):
     # Board creation 
     stack = [0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,18,19,19,20,20]
     table = [] 
-
+    pastIndex = []
+    
     os.system('cls')
     # initialize players
     player1 = input(f"{Fore.GREEN}Digite o nome do primeiro jogador: ")
@@ -465,35 +631,7 @@ def botGame(player1, board1, board2):
     # decide who starts
     dec = coinflip(player1, player2)
     input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
-    # player starts
     if dec == 0:
-        # Loop that ends when any of the boards is full
-        while True:
-            # Turn order player - bot
-            gameTurn(player1, board1, stack, table)
-            botTurn(player2, board2, stack, table)
-            # Check if all entries are different from zero, if they are, player1 has won!
-            if all(value != 0 for value in board1):
-                print(f"{Fore.RED}O Jogador", player1, "é o Vencedor!")
-                break
-            # Check if all entries are different from zero, if they are, player2 has won!
-            elif all(value != 0 for value in board2):
-                print(f"{Fore.RED}O bot é o Vencedor!")
-                break 
-    # bot starts        
+        PvEp1Start(player1, board1, player2, board2, stack, table, pastIndex)   # player starts   
     else:
-        # Loop that ends when any of the boards is full
-        while True:
-            # Turn order bot - player 
-            botTurn(player2, board2, stack, table)
-            gameTurn(player1, board1, stack, table)
-            # Check if all entries are different from zero, if they are, player1 has won!
-            if all(value != 0 for value in board1):
-                print(f"{Fore.RED}O Jogador", player1, "é o Vencedor!")
-                break
-            # Check if all entries are different from zero, if they are, player2 has won!
-            elif all(value != 0 for value in board2):
-                print(f"{Fore.RED}O bot é o Vencedor!")
-                break
-
-
+        PvEbotStart(player1, board1, player2, board2, stack, table, pastIndex)  # bot starts

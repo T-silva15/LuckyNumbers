@@ -17,13 +17,6 @@ def showPage():
     print(f"\n{Fore.RED}-------------------------------------{Back.WHITE}{Fore.BLACK}Jogo de: Filipe Nunes e Tiago Isidro{Back.RESET}{Fore.RED}-------------------------------------")
     input("\nPressione uma tecla para avançar...")
 
-# Player initialization
-player1 = " "
-board1 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-# create bot 
-player2 = " "
-board2 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-
 def chooseGame():
     os.system('cls')
     while True:         # loops until valid answer
@@ -58,22 +51,31 @@ def showMenu():
         
     # runs program based on the user's input
     if op == 1:
+        # Player initialization
+        player1 = " "
+        board1 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        # create bot 
+        player2 = " "
+        board2 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        # player chooses which game he would like to play
         x = chooseGame()
         if x == 1:
             twoPlayerGame(player1, player2, board1, board2)
         else:
             botGame(player1, board1, board2)
-            
+    # loads game from save file
     elif op == 2:
-        os.system('exit')
+        loadGame()
+    # shows description
     elif op == 3:
         showDescription()
         showMenu()
+    # exits game
     elif op == 4:
         os.system('cls')
         print(f"{Fore.RED}\nSessão Terminada!\n\n")
         os.system('exit')
 
-# calling function to start LuckyNumbers 
+# calling main functions to start LuckyNumbers 
 showPage()
 showMenu()
