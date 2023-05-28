@@ -13,4 +13,4 @@ def showDescription():
     print("|                                                                                                                       |")
     print("| / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / |")
     input("\nPressione uma tecla para continuar...")
-    os.system('cls') 
+    os.system('cls')
