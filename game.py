@@ -29,7 +29,7 @@ def showBoard(board, stack):
 
 # function to decide which player starts
 def coinflip(player1, player2):
-    os.system('cls')
+    os.system('clear')
     print(f"{Fore.BLUE}Quem começará o jogo?")
     time.sleep(1)
     # create random number between 0 and 1
@@ -210,10 +210,10 @@ def checkPlacement(board, pos, clover, stack):
 
 # funtion that runs when the bot wants to place a clover on the board
 def botBoardPlay(board, stack, table, clover):
-    os.system('cls')
+    os.system('clear')
     showBoard(board, stack)
     input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
-    os.system('cls')
+    os.system('clear')
     print(f"{Fore.WHITE}O bot está a escolher uma posição...")
     input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
     # loops until bot chooses a valid placement
@@ -221,7 +221,7 @@ def botBoardPlay(board, stack, table, clover):
         pos = random.randint(0,15)
         if checkPlacement(board, pos, clover, stack) == True:
             break
-    os.system('cls')
+    os.system('clear')
     print(f"{Fore.WHITE}O bot colocou o trevo na posição", pos + 1)
     input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
     # put clover on board
@@ -231,7 +231,7 @@ def botBoardPlay(board, stack, table, clover):
 def botTurn(bot, board, stack, table, pastIndex):
     dec = 0
     indClover = 0
-    os.system('cls')
+    os.system('clear')
     print(f"{Fore.WHITE}Turno do bot!")
     print(f"{Fore.RED}1. ",f"{Fore.WHITE}Tirar um trevo do saco")
     print(f"{Fore.RED}2. ",f"{Fore.WHITE}Escolher um trevo da mesa")
@@ -242,7 +242,7 @@ def botTurn(bot, board, stack, table, pastIndex):
     else:
         dec = 1
     if dec == 1:
-        os.system('cls')
+        os.system('clear')
         # draws clover
         indClover = drawClover(indClover, pastIndex)
         print(f"{Fore.WHITE}O bot decidiu retirar um trevo do saco!")
@@ -254,18 +254,18 @@ def botTurn(bot, board, stack, table, pastIndex):
         input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
         clPlace = random.randint(1,2)
         if clPlace == 1:
-            os.system('cls')
+            os.system('clear')
             print(f"{Fore.WHITE}O bot decidiu colocar o trevo no tabuleiro!")
             input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
             botBoardPlay(board, stack, table, indClover)
         else:
-            os.system('cls')
+            os.system('clear')
             print(f"{Fore.GREEN}O bot adicionou o trevo à mesa!")
             input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
             # appends stack index to table
             table.append(indClover)
     else:        
-        os.system('cls')
+        os.system('clear')
         print(f"{Fore.WHITE}O bot decidiu retirar um trevo da mesa!")
         # Prints table using the stack indexes
         print(f"{Fore.WHITE}A mesa possui os seguintes trevos: ")
@@ -275,7 +275,7 @@ def botTurn(bot, board, stack, table, pastIndex):
         print(f"{Fore.WHITE}\nO bot está a escolher uma opção...")
         input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
         num = random(0, len(table))
-        os.system('cls')
+        os.system('clear')
         print(f"{Fore.WHITE}\nO bot escolheu o trevo", stack[table[num]],"!")
         input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
         indClover = table[num]          # "pick up" clover from table
@@ -284,11 +284,11 @@ def botTurn(bot, board, stack, table, pastIndex):
 
 # function that runs if a player decides to draw a clover from the sack and place it on the board 
 def boardPlay(board, stack, table, clover):
-    os.system('cls')
+    os.system('clear')
     showBoard(board, stack)
     input(f"{Fore.WHITE}Pressione uma tecla para continuar...")
     while True:         # loops until user inputs a valid board position
-        os.system('cls')
+        os.system('clear')
         print(f"{Fore.BLUE}+-----------------+")
         print(f"{Fore.BLUE}|  1   2   3   4  |")    
         print(f"{Fore.BLUE}|-----------------|")
@@ -308,7 +308,7 @@ def boardPlay(board, stack, table, clover):
             table.append(board[pos])        # send clover to table
             board[pos] = clover      # put clover on square chosen
         else:
-            os.system('cls')
+            os.system('clear')
             print(f"{Fore.RED}O trevo não pode ser colocado nesse quadrado!")
             print(f"{Fore.RED}A reiniciar jogada...")
             time.sleep(5)
@@ -317,7 +317,7 @@ def boardPlay(board, stack, table, clover):
         if checkPlacement(board, pos, clover, stack) == True:
             board[pos] = clover       # put clover on square chosen
         else:
-            os.system('cls')
+            os.system('clear')
             print(f"{Fore.RED}O trevo não pode ser colocado nesse quadrado!")
             print(f"{Fore.RED}A reiniciar jogada...")
             time.sleep(5)
@@ -329,7 +329,7 @@ def gameTurn(player, board, stack, table, pastIndex):
     indClover = 0
     # Asks user for option (loops until acceptable answer)
     while True:
-        os.system('cls')
+        os.system('clear')
         print(f"{Fore.WHITE}Turno do", player,"!")
         print(f"{Fore.RED}1. ",f"{Fore.WHITE}Tirar um trevo do saco")
         print(f"{Fore.RED}2. ",f"{Fore.WHITE}Escolher um trevo da mesa")
@@ -343,7 +343,7 @@ def gameTurn(player, board, stack, table, pastIndex):
         indClover = drawClover(indClover, pastIndex)
         dec = 0
         while True:         # loops until user inputs an valid answer
-            os.system('cls')
+            os.system('clear')
             # tells the user what clover was drawn
             print(f"{Fore.WHITE}O trevo retirado foi um", stack[indClover],"!\n")
             # prompts the options
@@ -357,7 +357,7 @@ def gameTurn(player, board, stack, table, pastIndex):
         if dec == 1:
             boardPlay(board, stack, table, indClover)
         else:
-            os.system('cls')
+            os.system('clear')
             print(f"{Fore.GREEN}Trevo adicionado à mesa!")
             input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
             # appends stack index to table
@@ -368,7 +368,7 @@ def gameTurn(player, board, stack, table, pastIndex):
         if len(table) != 0:
             num = 1
             while True:         # loops question until user inputs valid number
-                os.system('cls')
+                os.system('clear')
                 # Prints table using the stack indexes
                 print(f"{Fore.WHITE}A mesa possui os seguintes trevos: ")
                 for i in range(len(table)):         
@@ -382,7 +382,7 @@ def gameTurn(player, board, stack, table, pastIndex):
             table.remove(indClover)         # removes clover that was picked up rom table
             boardPlay(board, stack, table, indClover)   # calls function to place clover on board
         else:
-            os.system('cls')
+            os.system('clear')
             print(f"{Fore.RED}A mesa não possui nenhum trevo!")
             print(f"{Fore.RED}O trevo será retirado do saco!")
             input(f"{Fore.RED}Pressione uma tecla para continuar...")
@@ -390,7 +390,7 @@ def gameTurn(player, board, stack, table, pastIndex):
             indClover = drawClover(indClover, pastIndex)
             dec = 0
             while True:
-                os.system('cls')
+                os.system('clear')
                 # tells the user what clover was drawn
                 print(f"{Fore.WHITE}O trevo retirado foi um", stack[indClover],"!\n")
                 # prompts the options
@@ -404,7 +404,7 @@ def gameTurn(player, board, stack, table, pastIndex):
             if dec == 1:
                 boardPlay(board, stack, table, indClover)
             else:
-                os.system('cls')
+                os.system('clear')
                 print(f"{Fore.GREEN}Trevo adicionado à mesa!")
                 input(f"{Fore.GREEN}Pressione uma tecla para continuar...")
                 table.append(indClover)
@@ -414,11 +414,11 @@ def PvPp1Start(player1, board1, player2, board2, stack, table, pastIndex):
     # Loop that ends when any of the boards is full
         while True:
             # Player 1 turn
-            os.system('cls')
+            os.system('clear')
             savePrompt(1, 'PvP', player1, board1, player2, board2, table, pastIndex)
             gameTurn(player1, board1, stack, table, pastIndex)
             # Player 2 turn
-            os.system('cls')
+            os.system('clear')
             savePrompt(2, 'PvP', player1, board1, player2, board2, table, pastIndex)
             gameTurn(player2, board2, stack, table,pastIndex)
             # Check if all entries are different from zero, if they are, player1 has won!
@@ -435,11 +435,11 @@ def PvPp2Start(player1, board1, player2, board2, stack, table, pastIndex):
     # Loop that ends when any of the boards is full
         while True:
             # Player 2 turn
-            os.system('cls')
+            os.system('clear')
             savePrompt(2, 'PvP', player1, board1, player2, board2, table, pastIndex)
             gameTurn(player2, board2, stack, table, pastIndex)
             # Player 1 turn
-            os.system('cls')
+            os.system('clear')
             savePrompt(1, 'PvP', player1, board1, player2, board2, table, pastIndex)
             gameTurn(player1, board1, stack, table, pastIndex)
             # Check if all entries are different from zero, if they are, player1 has won!
@@ -455,7 +455,7 @@ def PvPp2Start(player1, board1, player2, board2, stack, table, pastIndex):
 def PvEp1Start(player1, board1, player2, board2, stack, table, pastIndex):
     # Loop that ends when any of the boards is full
         while True:
-            os.system('cls')
+            os.system('clear')
             # Turn order player - bot
             savePrompt(1, 'PvE', player1, board1, player2, board2, table, pastIndex)
             gameTurn(player1, board1, stack, table, pastIndex)
@@ -475,7 +475,7 @@ def PvEbotStart(player1, board1, player2, board2, stack, table, pastIndex):
         while True:
             # Turn order bot - player 
             botTurn(player2, board2, stack, table, pastIndex)
-            os.system('cls')
+            os.system('clear')
             print(f"{Fore.BLUE}Turno do", player1)
             savePrompt(2, 'PvE', player1, board1, player2, board2, table, pastIndex)
             gameTurn(player1, board1, stack, table, pastIndex)
@@ -492,7 +492,7 @@ def PvEbotStart(player1, board1, player2, board2, stack, table, pastIndex):
 def savePrompt(pIdentifier, gIdentifer, player1, board1, player2, board2, table, pastIndex):
     # loops question until player inputs valid answer
     while True:
-        os.system('cls')
+        os.system('clear')
         if pIdentifier == 1:
             print(f"{Fore.BLUE}Turno do", player1)
         else:
@@ -537,7 +537,7 @@ def saveGame(pIdentifier, gIdentifer, player1, board1, player2, board2, table, p
 def loadGame():
     while True:
         # save file name input
-        os.system('cls')
+        os.system('clear')
         savename = input(f"{Fore.BLUE}Introduza o nome do ficheiro: ")
         filename = "save/" + savename + ".txt"
         # checks if save file with that name exists
@@ -605,7 +605,7 @@ def twoPlayerGame(player1, player2, board1, board2):
     table = []
     pastIndex = []  
     
-    os.system('cls')
+    os.system('clear')
     # initialize players
     player1 = input(f"{Fore.GREEN}Digite o nome do primeiro jogador: ")
     player2 = input(f"{Fore.GREEN}\nDigite o nome do segundo jogador: ")
@@ -625,7 +625,7 @@ def botGame(player1, board1, board2):
     table = [] 
     pastIndex = []
     
-    os.system('cls')
+    os.system('clear')
     # initialize players
     player1 = input(f"{Fore.GREEN}Digite o nome do primeiro jogador: ")
     player2 = "BOT"
